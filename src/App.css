@@ -1,0 +1,134 @@
+.app-shell {
+  width: min(1080px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 48px;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 24px;
+  text-align: left;
+}
+
+.site-header h1 {
+  margin: 0 0 8px;
+}
+
+.status-label,
+.product-list span {
+  display: inline-flex;
+  width: fit-content;
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.page-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0;
+}
+
+button {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--text-h);
+  background: var(--surface);
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover,
+button.active {
+  border-color: var(--accent-border);
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.page-section {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  text-align: left;
+  background: var(--surface);
+}
+
+.page-section h2 {
+  margin-top: 0;
+}
+
+.feature-grid,
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.feature-grid article,
+.product-list article,
+.detail-panel,
+.cart-summary {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px;
+  background: var(--bg);
+}
+
+.feature-grid h3,
+.product-list h3,
+.detail-panel h3 {
+  margin-bottom: 8px;
+}
+
+.product-list article {
+  display: grid;
+  gap: 10px;
+}
+
+.detail-panel,
+.cart-summary,
+.account-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+  max-width: 520px;
+}
+
+.account-form label {
+  display: grid;
+  gap: 6px;
+  color: var(--text-h);
+}
+
+.account-form input {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--text-h);
+  background: var(--bg);
+  font: inherit;
+}
+
+@media (max-width: 720px) {
+  .site-header,
+  .feature-grid,
+  .product-list {
+    grid-template-columns: 1fr;
+  }
+
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
