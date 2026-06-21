@@ -1,3 +1,5 @@
+/* Done by: Alex , written on 20 June 2026*/
+
 function Account() {
   return (
     <section className="planned-page account-page">

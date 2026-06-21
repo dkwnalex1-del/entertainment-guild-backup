@@ -1,3 +1,4 @@
+/*Author: Alan 20 June 2026*/
 function Home({ openPage }) {
   return (
     <section className="home-grid" aria-label="Homepage wireframe">

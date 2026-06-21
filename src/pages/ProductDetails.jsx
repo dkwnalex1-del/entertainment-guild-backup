@@ -1,3 +1,4 @@
+/*Author: Alan 20 June 2026*/
 function ProductDetails({ openPage }) {
   return (
     <section className="planned-page product-page">

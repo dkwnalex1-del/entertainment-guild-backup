@@ -1,3 +1,4 @@
+/*Author: Alan 20 June 2026*/
 const results = ['Result 1', 'Result 2', 'Result 3', 'Result 4'];
 
 function SearchResults({ openPage }) {
