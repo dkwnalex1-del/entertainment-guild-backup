@@ -1,19 +1,15 @@
-function SearchResults() {
+const results = ['Result 1', 'Result 2', 'Result 3', 'Result 4'];
+
+function SearchResults({ openPage }) {
   return (
-    <section className="page-section">
+    <section className="planned-page search-page">
       <h2>Search Results</h2>
-      <p>Customers will be able to search for products and compare available items.</p>
-      <div className="product-list">
-        <article>
-          <span>In progress</span>
-          <h3>Action Adventure Game</h3>
-          <p>Placeholder product card for search result layout testing.</p>
-        </article>
-        <article>
-          <span>In progress</span>
-          <h3>Family Movie Bundle</h3>
-          <p>Placeholder product card for future catalogue data.</p>
-        </article>
+      <div className="result-grid">
+        {results.map((result) => (
+          <button className="result-card" key={result} onClick={() => openPage('product')} type="button">
+            {result}
+          </button>
+        ))}
       </div>
     </section>
   );

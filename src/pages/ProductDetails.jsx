@@ -1,13 +1,18 @@
-function ProductDetails() {
+function ProductDetails({ openPage }) {
   return (
-    <section className="page-section">
-      <h2>Product Details</h2>
-      <p>This page will show product information, pricing, and add-to-cart controls.</p>
-      <div className="detail-panel">
-        <h3>Sample Product</h3>
-        <p>Genre: Entertainment</p>
-        <p>Availability: Prototype placeholder</p>
-        <button type="button">Add to Cart</button>
+    <section className="planned-page product-page">
+      <h2>Product Page</h2>
+      <div className="product-panel">
+        <p>Description, price</p>
+        <strong>Entertainment Guild featured item</strong>
+      </div>
+      <div className="product-actions">
+        <button onClick={() => openPage('cart')} type="button">
+          Add to cart
+        </button>
+        <button onClick={() => openPage('cart')} type="button">
+          Buy now
+        </button>
       </div>
     </section>
   );

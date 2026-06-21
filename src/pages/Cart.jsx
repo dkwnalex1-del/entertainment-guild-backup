@@ -1,11 +1,14 @@
 function Cart() {
   return (
-    <section className="page-section">
-      <h2>Shopping Cart</h2>
-      <p>Your selected items will appear here before checkout.</p>
-      <div className="cart-summary">
-        <p>Items: 0</p>
-        <p>Total: $0.00</p>
+    <section className="planned-page cart-page">
+      <h2>Your Cart</h2>
+      <div className="cart-items">
+        <article>Item 1&nbsp;&nbsp;$X</article>
+        <article>Item 2&nbsp;&nbsp;$Y</article>
+      </div>
+      <div className="subtotal-row">
+        <span />
+        <p>Subtotal: $X.Y</p>
       </div>
     </section>
   );

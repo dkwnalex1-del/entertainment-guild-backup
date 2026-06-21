@@ -1,17 +1,21 @@
-function Home() {
+function Home({ openPage }) {
   return (
-    <section className="page-section">
-      <h2>Home Page</h2>
-      <p>Welcome to Entertainment Guild, an online shopping website for entertainment products.</p>
-      <div className="feature-grid">
-        <article>
-          <h3>Featured Games</h3>
-          <p>Display popular entertainment products for customers to browse.</p>
-        </article>
-        <article>
-          <h3>New Releases</h3>
-          <p>Show recently added items that will be connected to the product catalogue later.</p>
-        </article>
+    <section className="home-grid" aria-label="Homepage wireframe">
+      <button className="feature-card hero-product" onClick={() => openPage('product')} type="button">
+        <span>Featured Product</span>
+        <strong>Console Game Bundle</strong>
+        <small>Click to view product page</small>
+      </button>
+
+      <div className="side-products">
+        <button className="feature-card" onClick={() => openPage('product')} type="button">
+          <span>Featured Product</span>
+          <strong>Movie Night Pack</strong>
+        </button>
+        <button className="feature-card" onClick={() => openPage('product')} type="button">
+          <span>Featured Product</span>
+          <strong>Gaming Headset</strong>
+        </button>
       </div>
     </section>
   );
