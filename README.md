@@ -2,4 +2,4 @@
 
 INFT3050 Web Programming Project
 
-Initial React project setup and website skeleton.
+Initial React project setup and website skeleton.git 

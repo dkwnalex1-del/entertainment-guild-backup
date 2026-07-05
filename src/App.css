@@ -1,3 +1,5 @@
+/* Done by: Alex , written on 20 June 2026*/
+
 .app-shell {
   min-height: 100svh;
   display: grid;
@@ -97,40 +99,6 @@
   top: 19px;
   left: 17px;
   transform: rotate(45deg);
-}
-
-.cart-shortcut {
-  width: 42px;
-  height: 36px;
-  border: 0;
-  color: transparent;
-  overflow: hidden;
-  background: transparent;
-  position: relative;
-}
-
-.cart-shortcut::before {
-  content: "";
-  width: 27px;
-  height: 14px;
-  border: 3px solid #777;
-  border-top: 0;
-  position: absolute;
-  left: 5px;
-  top: 11px;
-  transform: skewX(-12deg);
-}
-
-.cart-shortcut::after {
-  content: "";
-  width: 31px;
-  height: 2px;
-  background: #777;
-  position: absolute;
-  left: 4px;
-  top: 8px;
-  transform: rotate(-10deg);
-  box-shadow: 6px 22px 0 -0.5px #777, 20px 22px 0 -0.5px #777;
 }
 
 .home-nav {
@@ -420,4 +388,33 @@ button:hover {
   .subtotal-row {
     width: 100%;
   }
+}
+
+.home-menu {
+  display: flex;
+  justify-content: center;
+  margin: -18px auto 38px;
+}
+
+.home-menu .ant-menu {
+  min-width: 390px;
+  justify-content: center;
+}
+.product-layout {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.product-info {
+  flex: 1;
+  text-align: left;
+}
+
+.product-info h2 {
+  margin-top: 0;
+}
+
+.product-info p {
+  line-height: 1.6;
 }

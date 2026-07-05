@@ -1,69 +1,229 @@
-import { useState } from 'react';
-import './App.css';
-import Account from './pages/Account';
-import Cart from './pages/Cart';
-import Home from './pages/Home';
-import ProductDetails from './pages/ProductDetails';
-import SearchResults from './pages/SearchResults';
+/* Done by: Alex , created on 20 June 2026*/
+
+import { Layout, Menu, Input, Button, Badge } from "antd";
+import { useState } from "react";
+import "./App.css";
+import Account from "./pages/Account";
+import Login from "./pages/Login";
+import Cart from "./pages/Cart";
+import Home from "./pages/Home";
+import ProductDetails from "./pages/ProductDetails";
+import SearchResults from "./pages/SearchResults";
+import hero from "./assets/hero.png";
+import Products from "./pages/Products";
+import SignUp from "./pages/Signup";
+import apiAuth from "./pages/apiAuth";
+import Orders from "./pages/Orders";
+import Users from "./pages/Users";
 
 const pages = [
-  { id: 'home', label: 'Home', component: Home },
-  { id: 'search', label: 'Search Results', component: SearchResults },
-  { id: 'product', label: 'Product Details', component: ProductDetails },
-  { id: 'cart', label: 'Shopping Cart', component: Cart },
-  { id: 'account', label: 'Manage Account', component: Account },
+  { id: "login", label: "Login", component: Login },
+  { id: "home", label: "Home", component: Home },
+  { id: "search", label: "Search Results", component: SearchResults },
+  { id: "product", label: "Product Details", component: ProductDetails },
+  { id: "cart", label: "Shopping Cart", component: Cart },
+  { id: "account", label: "Manage Account", component: Account },
+  { id: "products", label: "Products", component: Products },
+  { id: "signup", label: "Sign Up", component: SignUp },
+  { id: "orders", label: "My Orders", component: Orders },
+  {id: "users", label: "Edit Users", component: Users},
 ];
 
 function App() {
-  const [activePage, setActivePage] = useState('home');
-  const CurrentPage = pages.find((page) => page.id === activePage).component;
-  const isHome = activePage === 'home';
-  const openPage = (pageId) => setActivePage(pageId);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [activePage, setActivePage] = useState("signup");
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
+  const [searchText, setSearchText] = useState("");
+
+  console.log("Active page", activePage);
+  const CurrentPage = pages.find(
+    (page) => page.id === activePage
+  ).component;
+
+  const isHome = activePage === "home";
+
+  const openPage = (pageId, product = null) => {
+    setActivePage(pageId);
+
+    if (product) {
+      setSelectedProduct(product);
+    }
+  };
+
+  const addToCart = (product) => {
+    setCartItems((prev) => {
+      const existing = prev.find((item) => item.ID === product.ID);
+
+      if (existing) {
+        return prev.map((item) =>
+          item.ID === product.ID
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+
+      return [...prev, { ...product, quantity: 1 }];
+    });
+  };
+
+  const increaseQuantity = (productID) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.ID === productID
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+    );
+  };
+
+  const decreaseQuantity = (productID) => {
+    setCartItems((prev) =>
+      prev
+        .map((item) =>
+          item.ID === productID
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
+  };
+
+  const removeFromCart = (productID) => {
+    setCartItems((prev) =>
+      prev.filter((item) => item.ID !== productID)
+    );
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
+  const logout = async () => {
+    try {
+      await apiAuth.post("/logout");
+
+      setCurrentUser(null);
+      setCartItems([]);
+
+      openPage("login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <main className="app-shell">
       <section className="wireframe-screen">
         <header className="top-bar">
           {isHome ? (
-            <button className="brand-mark" onClick={() => openPage('home')} type="button">
-              <span>EG</span>
-            </button>
+            <img
+              src={hero}
+              alt="Entertainment Guild"
+              className="brand-logo"
+              onClick={() => openPage("home")}
+            />
           ) : (
-            <button className="back-link" onClick={() => openPage('home')} type="button">
+            <button
+              className="back-link"
+              onClick={() => openPage("home")}
+              type="button"
+            >
               &lt; Back to Home page
             </button>
           )}
 
           <div className="search-tools" aria-label="Search and cart shortcuts">
-            <label className="search-box">
-              <span className="sr-only">Search products</span>
-              <input type="search" aria-label="Search products" />
-              <button onClick={() => openPage('search')} type="button">
-                Search
-              </button>
-            </label>
-            <button className="cart-shortcut" onClick={() => openPage('cart')} type="button" aria-label="Open cart">
+            <Input.Search
+              placeholder="Search products"
+              onSearch={(value) => {
+                setSearchText(value);
+                openPage("search");
+              }}
+              style={{ width: 220 }}
+            />
+
+            <Button onClick={() => openPage("cart")}>
               Cart
-            </button>
+            </Button>
           </div>
         </header>
 
-        {isHome && (
-          <nav className="home-nav" aria-label="Prototype pages">
-            <button onClick={() => openPage('home')} type="button">
-              Home
-            </button>
-            <button onClick={() => openPage('search')} type="button">
-              Category
-            </button>
-            <button onClick={() => openPage('account')} type="button">
-              Account
-            </button>
-          </nav>
-        )}
+        <div className="home-menu">
+          <Menu
+            mode="horizontal"
+            selectedKeys={[activePage]}
+            onClick={({ key }) => {
+              if (key === "logout") {
+                logout();
+              } else {
+                openPage(key);
+              }
+            }}
+            items={[
+              {
+                key: "home",
+                label: "Home",
+              },
+              {
+                key: "products",
+                label: "Products",
+              },
 
-        <div className={isHome ? 'page-body home-layout' : 'page-body'}>
-          <CurrentPage openPage={openPage} />
+              ...(!currentUser
+                ? [
+                    {
+                      key: "login",
+                      label: "Login",
+                    },
+                    {
+                      key: "signup",
+                      label: "Sign Up",
+                    },
+                  ]
+                : currentUser.IsAdmin
+                ? [
+                    {
+                      key: "users",
+                      label: "Users",
+                    },
+                    {
+                      key: "logout",
+                      label: "Logout",
+                    },
+                  ]
+                : [
+                    {
+                      key: "orders",
+                      label: "My Orders",
+                    },
+                    {
+                      key: "account",
+                      label: "Account",
+                    },
+                    {
+                      key: "logout",
+                      label: "Logout",
+                    },
+                  ]),
+            ]}
+          />
+        </div>
+
+        <div className={isHome ? "page-body home-layout" : "page-body"}>
+          <CurrentPage
+            openPage={openPage}
+            searchText={searchText}
+            selectedProduct={selectedProduct}
+            cartItems={cartItems}
+            addToCart={addToCart}
+            increaseQuantity={increaseQuantity}
+            decreaseQuantity={decreaseQuantity}
+            removeFromCart={removeFromCart}
+            clearCart={clearCart}
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+          />
         </div>
       </section>
     </main>
