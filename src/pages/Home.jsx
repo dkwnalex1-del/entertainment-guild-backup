@@ -21,6 +21,15 @@ const categories = [
   "Aguirre: The Wrath of God": aguirreTheWrathOfGod,
   "Star Wars: Knights of the Old Republic": starWarsKOTOR,
 };
+const getProductImage = (product, category) => {
+  const safeName = product.Name.replace(/[<>:"/\\|?*]/g, "");
+  const fileName = `${String(product.ID).padStart(3, "0")}-${safeName}.jpg`;
+
+  return (
+    productImages[`../assets/${category}/${fileName}`] ||
+    "https://placehold.co/300x450?text=No+Image"
+  );
+};
 
 function Home({ openPage, currentUser, addToCart }) {
 const [featuredBook, setFeaturedBook] = useState(null);
@@ -70,53 +79,64 @@ useEffect(() => {
   return (
     
     <>
+    <div className="welcome-banner">
+  <h4>
+    Welcome, {currentUser ? currentUser.UserName : "Guest"} 👋
+  </h4>
+</div>
     <section className="home-grid" aria-label="Homepage wireframe">
-        <Card
-  className="hero-product"
+       <Card
+  className="hero-banner"
   hoverable
-  onClick={() => openPage("product", featuredBook)}
+  onClick={() => openPage("product", featuredGame)}
+  bodyStyle={{ padding: 40 }}
 >
-  <h2>
-    Welcome {currentUser ? currentUser.UserName : "Guest"}!
-  </h2>
-  <p>Featured Product</p>
-  <Image
-  preview={false}
-  height={220}
-  style={{ objectFit: "cover" }}
-  src={
-    productImages[featuredBook?.Name] ||
-    "https://placehold.co/200x300?text=Book+Cover"
-  }
-  />
-  <h3>{featuredBook?.Name}</h3>
+<div className="hero-content">
 
-  <small>Click to view product page</small>
+  <div className="hero-text">
 
-  <br />
-  <br />
+    
+
+    <h1>{featuredGame?.Name}</h1>
+
+    <p>
+      Discover your next favourite book, movie and game
+      at Entertainment Guild.
+    </p>
 
     <Button
       type="primary"
-      disabled={getStockInfo(featuredBook?.ID)?.Quantity === 0}
+      size="large"
+      disabled={getStockInfo(featuredGame?.ID)?.Quantity === 0}
       onClick={(e) => {
         e.stopPropagation();
 
-        const stock = getStockInfo(featuredBook.ID);
+        const stock = getStockInfo(featuredGame.ID);
 
         addToCart({
-          ...featuredBook,
+          ...featuredGame,
           Price: stock?.Price ?? 0,
           Stock: stock?.Quantity ?? 0,
         });
 
-        message.success(`${featuredBook?.Name} added to cart!`);
+        message.success(`${featuredGame?.Name} added to cart!`);
       }}
     >
-      {getStockInfo(featuredBook?.ID)?.Quantity === 0
-        ? "Out of Stock"
-        : "Add to Cart"}
+      Shop Now
     </Button>
+
+  </div>
+
+  <Image
+    preview={false}
+    src={
+      productImages[featuredGame?.Name] ||
+      "https://placehold.co/280x400"
+    }
+    className="hero-cover"
+  />
+
+</div>
 
 </Card>
 
@@ -166,41 +186,41 @@ useEffect(() => {
         <Card
   className="hero-product"
   hoverable
-  onClick={() => openPage("product", featuredGame)}
+  onClick={() => openPage("product", featuredBook)}
 >
           <Image
   preview={false}
   height={180}
   style={{ objectFit: "cover" }}
   src={
-    productImages[featuredGame?.Name] ||
+    productImages[featuredBook?.Name] ||
     "https://placehold.co/200x300?text=Game"
   }
 />
           <p>🎮 Featured Game</p>
-          <h3>{featuredGame?.Name}</h3>
+          <h3>{featuredBook?.Name}</h3>
           <small>Click to view product page</small>
 
           <br />
           <br />
       <Button
         type="primary"
-        disabled={getStockInfo(featuredGame?.ID)?.Quantity === 0}
+        disabled={getStockInfo(featuredBook?.ID)?.Quantity === 0}
         onClick={(e) => {
           e.stopPropagation();
 
-          const stock = getStockInfo(featuredGame.ID);
+          const stock = getStockInfo(featuredBook.ID);
 
           addToCart({
-            ...featuredGame,
+            ...featuredBook,
             Price: stock?.Price ?? 0,
             Stock: stock?.Quantity ?? 0,
           });
 
-          message.success(`${featuredGame?.Name} added to cart!`);
+          message.success(`${featuredBook?.Name} added to cart!`);
         }}
       >
-        {getStockInfo(featuredGame?.ID)?.Quantity === 0
+        {getStockInfo(featuredBook?.ID)?.Quantity === 0
           ? "Out of Stock"
           : "Add to Cart"}
       </Button>

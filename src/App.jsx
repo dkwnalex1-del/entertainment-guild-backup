@@ -15,6 +15,7 @@ import SignUp from "./pages/Signup";
 import apiAuth from "./pages/apiAuth";
 import Orders from "./pages/Orders";
 import Users from "./pages/Users";
+import Categories from "./pages/Categories";
 
 const pages = [
   { id: "login", label: "Login", component: Login },
@@ -23,10 +24,15 @@ const pages = [
   { id: "product", label: "Product Details", component: ProductDetails },
   { id: "cart", label: "Shopping Cart", component: Cart },
   { id: "account", label: "Manage Account", component: Account },
-  { id: "products", label: "Products", component: Products },
+  { id: "products", label: "Products", component: Products }, 
   { id: "signup", label: "Sign Up", component: SignUp },
   { id: "orders", label: "My Orders", component: Orders },
   {id: "users", label: "Edit Users", component: Users},
+  {
+    id: "categories",
+    label: "Categories",
+    component: Categories,
+}
 ];
 
 function App() {
@@ -139,7 +145,7 @@ function App() {
                 setSearchText(value);
                 openPage("search");
               }}
-              style={{ width: 220 }}
+              style={{ width: 420 }}
             />
 
             <Button onClick={() => openPage("cart")}>
@@ -151,6 +157,7 @@ function App() {
         <div className="home-menu">
           <Menu
             mode="horizontal"
+            disabledOverflow
             selectedKeys={[activePage]}
             onClick={({ key }) => {
               if (key === "logout") {
@@ -160,50 +167,60 @@ function App() {
               }
             }}
             items={[
-              {
-                key: "home",
-                label: "Home",
-              },
-              {
-                key: "products",
-                label: "Products",
-              },
+  {
+    key: "home",
+    label: "Home",
+  },
+  {
+    key: "products",
+    label: "Products",
+  },
 
-              ...(!currentUser
-                ? [
-                    {
-                      key: "login",
-                      label: "Login",
-                    },
-                    {
-                      key: "signup",
-                      label: "Sign Up",
-                    },
-                  ]
-                : [
-                    ...(currentUser.IsAdmin
-                      ? [
-                          {
-                            key: "users",
-                            label: "Users",
-                          },
-                        ]
-                      : [{
-                          key: "orders",
-                          label: "My Orders"
-                      }]
-                      [{
-                        key:"account",
-                        label:"Account",
-                      }]
-                    ),
-                    
-                    {
-                      key: "logout",
-                      label: "Logout",
-                    },
-                  ]),
-            ]}
+  ...(!currentUser
+    ? [
+        {
+          key: "login",
+          label: "Login",
+        },
+        {
+          key: "signup",
+          label: "Sign Up",
+        },
+      ]
+    : currentUser.IsAdmin
+    ? [
+        {
+          key: "users",
+          label: "Users",
+        },
+        {
+    key: "categories",
+    label: "Categories",
+},
+        {
+          key: "account",
+          label: "Account",
+        },
+        {
+          key: "logout",
+          label: "Logout",
+        },
+      ]
+    : [
+        {
+          key: "orders",
+          label: "My Orders",
+        },
+        {
+          key: "account",
+          label: "Account",
+        },
+        {
+          key: "logout",
+          label: "Logout",
+        },
+      ]),
+]}
           />
         </div>
 

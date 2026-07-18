@@ -96,6 +96,7 @@ function ProductDetails({ openPage, selectedProduct, addToCart}) {
 
       <Button
   type="primary"
+  size="large"
   style={{ marginLeft: 10 }}
   disabled={stockInfo?.Quantity === 0}
   onClick={() => openPage("cart")}
